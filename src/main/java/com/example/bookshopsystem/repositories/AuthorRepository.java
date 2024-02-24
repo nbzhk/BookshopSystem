@@ -14,4 +14,6 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
     List<Author> findAllByOrderByBooks();
 
     Author findAuthorByFirstNameAndLastName(String firstName, String lastName);
+
+    List<Author> findDistinctByFirstNameEndingWith(String ending);
 }

@@ -26,4 +26,9 @@ public class AuthorServiceImpl implements AuthorService {
 
         return allAuthors.get(randomIndex);
     }
+
+    @Override
+    public List<Author> findAllWhoseFirstNameEndsWith(String ending) {
+        return this.authorRepository.findDistinctByFirstNameEndingWith(ending);
+    }
 }
