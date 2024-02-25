@@ -67,4 +67,9 @@ public class BookServiceImpl implements BookService {
     public List<Book> findByAuthorLastNameStartingWith(String startsWith) {
         return this.bookRepository.findByAuthorLastNameStartingWith(startsWith);
     }
+
+    @Override
+    public int countBooksWithTitleGreaterThan(int number) {
+        return this.bookRepository.countBookByTitleLongerThan(number);
+    }
 }

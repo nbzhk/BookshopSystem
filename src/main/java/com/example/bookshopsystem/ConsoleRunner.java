@@ -37,8 +37,8 @@ public class ConsoleRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //seedService.seedAuthors();
-       /* seedService.seedCategories();
+        /* seedService.seedAuthors();
+        seedService.seedCategories();
         seedService.seedBooks(); */
         // this.booksAfter();
 
@@ -54,7 +54,24 @@ public class ConsoleRunner implements CommandLineRunner {
         // P05BooksReleasedBeforeDate();
         // P06AuthorsSearch();
         // P07BooksSearch();
-        P08BookTitlesSearch();
+        // P08BookTitlesSearch();
+        // P09CountBooks();
+        // P10TotalBookCopies();
+    }
+
+    private void P10TotalBookCopies() {
+        this.authorService.findAllCopiesForAuthor().forEach(a ->
+                System.out.printf("%s %s - %d%n", a.getFirstName(), a.getLastName(), a.getTotalCopies()));
+    }
+
+    private void P09CountBooks() {
+        Scanner scanner = new Scanner(System.in);
+        int length = Integer.parseInt(scanner.nextLine());
+
+        int countBooks = this.bookService.countBooksWithTitleGreaterThan(length);
+
+        System.out.println(countBooks);
+
     }
 
     private void P08BookTitlesSearch() {

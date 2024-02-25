@@ -1,6 +1,7 @@
 package com.example.bookshopsystem.services;
 
 import com.example.bookshopsystem.entities.Author;
+import com.example.bookshopsystem.entities.AuthorCopiesDTO;
 import com.example.bookshopsystem.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<Author> findAllWhoseFirstNameEndsWith(String ending) {
         return this.authorRepository.findDistinctByFirstNameEndingWith(ending);
+    }
+
+    @Override
+    public List<AuthorCopiesDTO> findAllCopiesForAuthor() {
+        return this.authorRepository.findAllCopiesForAuthor();
     }
 }

@@ -23,4 +23,6 @@ public interface BookService {
     List<String> findAllTitlesContaining(String part);
 
     List<Book> findByAuthorLastNameStartingWith(String startsWith);
+
+    int countBooksWithTitleGreaterThan(int number);
 }
