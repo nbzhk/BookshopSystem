@@ -2,6 +2,7 @@ package com.example.bookshopsystem;
 
 import com.example.bookshopsystem.entities.Author;
 import com.example.bookshopsystem.entities.Book;
+import com.example.bookshopsystem.entities.BookSummaryDTO;
 import com.example.bookshopsystem.entities.EditionType;
 import com.example.bookshopsystem.repositories.AuthorRepository;
 import com.example.bookshopsystem.repositories.BookRepository;
@@ -57,6 +58,54 @@ public class ConsoleRunner implements CommandLineRunner {
         // P08BookTitlesSearch();
         // P09CountBooks();
         // P10TotalBookCopies();
+        // P11ReducedBook();
+        // P12IncreaseBookCopies();
+        // P13RemoveBooks();
+        P14StoredProcedure();
+
+    }
+
+    private void P14StoredProcedure() {
+        Scanner scanner = new Scanner(System.in);
+        String[] name = scanner.nextLine().split("\\s+");
+
+        String firstName = name[0];
+        String lastName = name[1];
+
+        int totalBooks = this.authorService.getTotalBooks(firstName, lastName);
+
+        System.out.printf("%s %s has written %d books",
+                name[0], name[1], totalBooks);
+    }
+
+    private void P13RemoveBooks() {
+        Scanner scanner = new Scanner(System.in);
+        int lowerThan = Integer.parseInt(scanner.nextLine());
+
+        int deletedBooks = this.bookService.removeBooksWithCopiesLowerThan(lowerThan);
+
+        System.out.println(deletedBooks);
+    }
+
+    private void P12IncreaseBookCopies() {
+        Scanner scanner = new Scanner(System.in);
+
+        String date = scanner.nextLine();
+        int amount = Integer.parseInt(scanner.nextLine());
+
+        int addedCopies = this.bookService.increaseCopiesForBookAfter(date, amount);
+
+        System.out.println(addedCopies * amount);
+    }
+
+    private void P11ReducedBook() {
+        Scanner scanner = new Scanner(System.in);
+        String title = scanner.nextLine();
+
+        BookSummaryDTO summary = this.bookService.getInformationForTitle(title);
+        System.out.printf("%s %s %s %.2f%n",
+                summary.getTitle(), summary.getEditionType(),
+                summary.getAgeRestriction(), summary.getPrice());
     }
 
     private void P10TotalBookCopies() {

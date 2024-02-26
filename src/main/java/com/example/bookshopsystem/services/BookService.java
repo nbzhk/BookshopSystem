@@ -1,11 +1,11 @@
 package com.example.bookshopsystem.services;
 
 import com.example.bookshopsystem.entities.Book;
+import com.example.bookshopsystem.entities.BookSummaryDTO;
 import com.example.bookshopsystem.entities.EditionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.List;
 
 public interface BookService {
@@ -25,4 +25,10 @@ public interface BookService {
     List<Book> findByAuthorLastNameStartingWith(String startsWith);
 
     int countBooksWithTitleGreaterThan(int number);
+
+    BookSummaryDTO getInformationForTitle(String title);
+
+    int increaseCopiesForBookAfter(String date, int amount);
+
+    int removeBooksWithCopiesLowerThan(int lowerThan);
 }

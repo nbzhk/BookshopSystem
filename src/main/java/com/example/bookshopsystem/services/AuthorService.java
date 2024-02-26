@@ -13,4 +13,6 @@ public interface AuthorService {
 
     List<AuthorCopiesDTO> findAllCopiesForAuthor();
 
+    int getTotalBooks(String firstName, String lastName);
+
 }

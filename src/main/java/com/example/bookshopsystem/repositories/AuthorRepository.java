@@ -2,8 +2,12 @@ package com.example.bookshopsystem.repositories;
 
 import com.example.bookshopsystem.entities.Author;
 import com.example.bookshopsystem.entities.AuthorCopiesDTO;
+import jakarta.persistence.StoredProcedureParameter;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -27,4 +31,7 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
             " group by a.id" +
             " order by totalCopies DESC")
     List<AuthorCopiesDTO> findAllCopiesForAuthor();
+
+    @Procedure(procedureName = "GET_TOTAL_BOOKS_BY_AUTHOR")
+    int getTotalBooks(@Param("first_name") String firstName, @Param("last_name") String lastName);
 }

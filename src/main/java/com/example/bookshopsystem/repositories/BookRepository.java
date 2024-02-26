@@ -1,10 +1,9 @@
 package com.example.bookshopsystem.repositories;
 
-import com.example.bookshopsystem.entities.AgeRestriction;
-import com.example.bookshopsystem.entities.Author;
-import com.example.bookshopsystem.entities.Book;
-import com.example.bookshopsystem.entities.EditionType;
+import com.example.bookshopsystem.entities.*;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
@@ -31,4 +30,22 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT COUNT(b.title) FROM books b WHERE length(b.title) > :length")
     int countBookByTitleLongerThan(int length);
+
+    @Query("SELECT b.title AS title, b.editionType AS editionType, " +
+            " b.ageRestriction AS ageRestriction, b.price AS price" +
+            " FROM books b" +
+            " WHERE b.title LIKE :title")
+    BookSummaryDTO findSummaryForTitle(String title);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE books b" +
+            " SET b.copies = b.copies + :amount" +
+            " WHERE b.releaseDate > :date")
+    int increaseCopiesForBooksAfter(LocalDate date, int amount);
+
+
+    @Transactional
+    int deleteBookByCopiesLessThan(int amount);
+
 }

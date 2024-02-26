@@ -37,4 +37,9 @@ public class AuthorServiceImpl implements AuthorService {
     public List<AuthorCopiesDTO> findAllCopiesForAuthor() {
         return this.authorRepository.findAllCopiesForAuthor();
     }
+
+    @Override
+    public int getTotalBooks(String firstName, String lastName) {
+        return this.authorRepository.getTotalBooks(firstName, lastName);
+    }
 }

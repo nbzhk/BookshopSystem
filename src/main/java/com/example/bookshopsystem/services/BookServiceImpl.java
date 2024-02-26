@@ -2,16 +2,19 @@ package com.example.bookshopsystem.services;
 
 import com.example.bookshopsystem.entities.AgeRestriction;
 import com.example.bookshopsystem.entities.Book;
+import com.example.bookshopsystem.entities.BookSummaryDTO;
 import com.example.bookshopsystem.entities.EditionType;
 import com.example.bookshopsystem.repositories.BookRepository;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.Collection;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,5 +74,25 @@ public class BookServiceImpl implements BookService {
     @Override
     public int countBooksWithTitleGreaterThan(int number) {
         return this.bookRepository.countBookByTitleLongerThan(number);
+    }
+
+    @Override
+    public BookSummaryDTO getInformationForTitle(String title) {
+        return this.bookRepository.findSummaryForTitle(title);
+    }
+
+    @Override
+    public int increaseCopiesForBookAfter(String date, int amount) {
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("dd MMM yyyy")
+                .toFormatter(Locale.ENGLISH);
+        LocalDate after = LocalDate.parse(date, formatter);
+        return this.bookRepository.increaseCopiesForBooksAfter(after, amount);
+    }
+
+    @Override
+    public int removeBooksWithCopiesLowerThan(int lowerThan) {
+        return this.bookRepository.deleteBookByCopiesLessThan(lowerThan);
     }
 }
